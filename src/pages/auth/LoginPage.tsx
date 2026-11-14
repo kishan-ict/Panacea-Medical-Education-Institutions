@@ -98,9 +98,9 @@ export function LoginPage() {
   }
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-[#e8eaed]">
-      {/* Full-screen background carousel */}
-      <div className="absolute inset-0" aria-hidden>
+    <div className="relative min-h-screen w-full overflow-x-hidden bg-[#e8eaed] lg:overflow-hidden">
+      {/* Full-screen background carousel (desktop) */}
+      <div className="absolute inset-0 hidden lg:block" aria-hidden>
         {SLIDES.map((src, index) => (
           <img
             key={src}
@@ -114,23 +114,39 @@ export function LoginPage() {
         ))}
       </div>
 
+      {/* Mobile / tablet image banner */}
+      <div className="relative h-44 w-full overflow-hidden sm:h-56 md:h-64 lg:hidden" aria-hidden>
+        {SLIDES.map((src, index) => (
+          <img
+            key={src}
+            src={src}
+            alt=""
+            className={cn(
+              'absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-[1800ms] ease-in-out',
+              index === activeSlide ? 'opacity-100' : 'opacity-0',
+            )}
+          />
+        ))}
+        <div className="absolute inset-0 bg-gradient-to-t from-white/20 to-transparent" />
+      </div>
+
       {/* Floating angled login panel */}
       <main
-        className="relative z-10 flex min-h-screen w-full flex-col bg-white shadow-[18px_0_48px_rgba(15,23,42,0.14)] sm:w-[420px] md:w-[380px] lg:fixed lg:inset-y-0 lg:left-0 lg:w-[34vw] lg:min-w-[360px] lg:max-w-[460px] lg:overflow-y-auto"
+        className="relative z-10 flex w-full flex-col bg-white shadow-[0_-8px_30px_rgba(15,23,42,0.08)] lg:min-h-screen lg:shadow-[18px_0_48px_rgba(15,23,42,0.14)] lg:fixed lg:inset-y-0 lg:left-0 lg:w-[34vw] lg:min-w-[360px] lg:max-w-[460px] lg:overflow-y-auto"
         style={{ clipPath: 'polygon(0 0, 100% 0, 90% 100%, 0 100%)' }}
       >
-        <div className="flex flex-1 flex-col px-8 py-8 sm:px-10 sm:py-10 lg:px-10 lg:py-10 lg:pr-14 xl:px-12 xl:pr-16">
-          <div className="mb-6">
-            <InstitutionLogo size={56} variant="light" className="rounded-lg" />
-            <p className="mt-4 font-display text-[15px] font-semibold leading-snug tracking-tight text-ink sm:text-[16px]">
+        <div className="flex flex-1 flex-col px-5 py-6 sm:px-8 sm:py-8 lg:px-10 lg:py-10 lg:pr-14 xl:px-12 xl:pr-16">
+          <div className="mb-5 sm:mb-6">
+            <InstitutionLogo size={52} variant="light" className="rounded-lg sm:h-14 sm:w-14" />
+            <p className="mt-3 font-display text-[14px] font-semibold leading-snug tracking-tight text-ink sm:mt-4 sm:text-[16px]">
               Panacea Medical Education Institutions
             </p>
           </div>
 
-          <h1 className="font-display text-[32px] font-bold tracking-tight text-ink">Login</h1>
-          <p className="mt-2 text-[14px] leading-6 text-ink2">Please login with your Username &amp; Password</p>
+          <h1 className="font-display text-[28px] font-bold tracking-tight text-ink sm:text-[32px]">Login</h1>
+          <p className="mt-2 text-[13px] leading-6 text-ink2 sm:text-[14px]">Please login with your Username &amp; Password</p>
 
-          <form onSubmit={submit} className="mt-6 space-y-5" noValidate>
+          <form onSubmit={submit} className="mt-5 space-y-4 sm:mt-6 sm:space-y-5" noValidate>
             <Field label="Username / Student ID / Employee ID">
               <Input
                 value={username}
@@ -173,7 +189,7 @@ export function LoginPage() {
               <button
                 type="button"
                 onClick={() => setResetOpen(true)}
-                className="text-[13px] font-medium text-royal transition hover:text-royal/80 hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal/30 rounded"
+                className="rounded text-[13px] font-medium text-royal transition hover:text-royal/80 hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal/30"
               >
                 Forgot Password?
               </button>
@@ -191,7 +207,7 @@ export function LoginPage() {
             </Button>
           </form>
 
-          <div className="mt-7 flex flex-wrap items-center gap-3 pb-2">
+          <div className="mt-6 flex flex-wrap items-center gap-3 pb-4 sm:mt-7 sm:pb-2">
             <GooglePlayBadge />
             <AppStoreBadge />
           </div>
